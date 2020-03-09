@@ -16,6 +16,10 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import javax.swing.ImageIcon;
 
 public class Screen extends JPanel implements MouseListener, ActionListener, MouseMotionListener{
 	
@@ -27,6 +31,7 @@ public class Screen extends JPanel implements MouseListener, ActionListener, Mou
 	private JButton drawButton, eyeDropperButton;
 	private Font font1;
 	private String currentTool;
+	private ImageIcon background;
 	
 	
 	public Screen(){
@@ -67,6 +72,7 @@ public class Screen extends JPanel implements MouseListener, ActionListener, Mou
 		blueSet = 0;
 		store = true;
 		currentTool = "Draw";
+		background = new ImageIcon("ImageAssets/background.png");
 		
 		
 		//font
@@ -84,22 +90,22 @@ public class Screen extends JPanel implements MouseListener, ActionListener, Mou
 		undoButton.addActionListener(this);
 		
 		fillButton = new JButton("Fill");
-		fillButton.setBounds(570,360,150,30);
+		fillButton.setBounds(570,365,150,30);
 		add(fillButton);
 		fillButton.addActionListener(this);
 		
 		saveFileButton = new JButton("Save File");
-		saveFileButton.setBounds(775,430,150,30);
+		saveFileButton.setBounds(775,435,150,30);
 		add(saveFileButton);
 		saveFileButton.addActionListener(this);
 		
 		drawButton = new JButton("Draw");
-		drawButton.setBounds(570,395,150,30);
+		drawButton.setBounds(570,400,150,30);
 		add(drawButton);
 		drawButton.addActionListener(this);
 		
 		eyeDropperButton = new JButton("Eye Dropper");
-		eyeDropperButton.setBounds(570,430,150,30);
+		eyeDropperButton.setBounds(570,435,150,30);
 		add(eyeDropperButton);
 		eyeDropperButton.addActionListener(this);
 		
@@ -107,13 +113,16 @@ public class Screen extends JPanel implements MouseListener, ActionListener, Mou
 	
 	
 	public Dimension getPreferredSize(){
-		return new Dimension(980,575);
+		return new Dimension(955,575);
 		
 	}
 	
 	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
+		
+		//background
+		background.paintIcon(this,g,0,0);
 		
 		//grid
 		int x = 10;
@@ -240,16 +249,19 @@ public class Screen extends JPanel implements MouseListener, ActionListener, Mou
 		
 		//chosen color
 		g.setColor( new Color(redSet,greenSet,blueSet) );
-		g.fillRect(835,370,30,30);
+		g.fillRect(835,375,30,30);
 		g.setColor(Color.black);
-		g.drawRect(835,370,30,30);
+		g.drawRect(835,375,30,30);
 		g.setFont(font1);
-		g.drawString("Current Color",803,355);
+		g.drawString("Current Color",803,360);
 		
 		//choose tool
 		g.setColor(Color.black);
 		g.setFont(font1);
-		g.drawString("Current Tool: " + currentTool,575,350);
+		g.drawString("Current Tool: " + currentTool,575,355);
+		
+		//color palette
+		g.drawString("Color Palette",700,300);
 		
 		
 		
@@ -550,9 +562,10 @@ public class Screen extends JPanel implements MouseListener, ActionListener, Mou
 		BufferedImage image = null;
 		File f = null;
 		
+		String fileName = JOptionPane.showInputDialog("Enter file name:");
+		
 		//read image file
 		try{
-			f = new File("PixelArt.png");
 			image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 			
 			Graphics2D g2d = image.createGraphics();
@@ -571,7 +584,7 @@ public class Screen extends JPanel implements MouseListener, ActionListener, Mou
 			g2d.dispose();
 			
 			// Save as PNG
-       	 	File file = new File("myimage.png");
+       	 	File file = new File("SavedImages/" + fileName + ".png");
         	ImageIO.write(image, "png", file);
 	
 		} catch (IOException e){
