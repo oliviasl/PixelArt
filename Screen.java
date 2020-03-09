@@ -90,7 +90,7 @@ public class Screen extends JPanel implements MouseListener, ActionListener, Mou
 		undoButton.addActionListener(this);
 		
 		fillButton = new JButton("Fill");
-		fillButton.setBounds(570,365,150,30);
+		fillButton.setBounds(570,400,150,30);
 		add(fillButton);
 		fillButton.addActionListener(this);
 		
@@ -100,7 +100,7 @@ public class Screen extends JPanel implements MouseListener, ActionListener, Mou
 		saveFileButton.addActionListener(this);
 		
 		drawButton = new JButton("Draw");
-		drawButton.setBounds(570,400,150,30);
+		drawButton.setBounds(570,365,150,30);
 		add(drawButton);
 		drawButton.addActionListener(this);
 		
@@ -403,6 +403,7 @@ public class Screen extends JPanel implements MouseListener, ActionListener, Mou
 	
 	public void actionPerformed(ActionEvent e){
 		if( e.getSource() == clearButton ){
+			storeUndo();
 			for(int r = 0;r < grid.length;r ++){
 				for(int c = 0;c < grid[r].length;c ++){
 					grid[r][c].setColor(255,255,255);
