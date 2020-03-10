@@ -253,7 +253,7 @@ public class Screen extends JPanel implements MouseListener, ActionListener, Mou
 		g.setColor(Color.black);
 		g.drawRect(835,375,30,30);
 		g.setFont(font1);
-		g.drawString("Current Color",803,360);
+		g.drawString("Current Color",807,360);
 		
 		//choose tool
 		g.setColor(Color.black);
